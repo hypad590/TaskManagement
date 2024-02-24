@@ -2,11 +2,21 @@ package com.tmanagement.taskmanagement.Service;
 
 import com.tmanagement.taskmanagement.Model.User;
 import com.tmanagement.taskmanagement.Repository.Repository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class Service {
-    @Autowired
     Repository repos;
     User user;
     public void setValues(String requested){
@@ -16,4 +26,49 @@ public class Service {
 
         repos.save(user);
     }
-}
+    public String Parse(){
+        String url = "https://github.com/hypad590?tab=repositories";
+        String path = System.getProperty("user.dir") + "/taskmanagement/src/main/resources/templates/create.html";
+        File file = new File(path);
+        String body = null;
+        try {
+            body = "\t<ul>\n" + String.join("\n", Objects.
+                    requireNonNull(
+                            Jsoup.connect(
+                                    url
+                            ).get().selectFirst(
+                                    "ul[data-filterable-for=your-repos-filter][data-filterable-type=substring]"
+                            )
+                    )
+                    .select("li").stream()
+                    .map(
+                            element -> {
+                                String name = Objects.requireNonNull(element.selectFirst("a")).text();
+                                return "\t\t<li>" + String.format("<a href=%s%s>%s</a>", url + "/", name, name) + "</li>";
+                            }
+                    ).toList()
+            )+ "\n\t</ul>";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        String html = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "<meta charset=\"UTF-8\">\n" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "<title>Dynamic HTML</title>\n" +
+                "<link rel=\"stylesheet\" type=\"text/css\" href=\"styles0.css\">\n" +
+                "</head>\n" +
+                "<body>\n" +
+                body + "\n" +
+                "</body>\n" +
+                "</html>";
+
+        try(FileWriter writer = new FileWriter(file)){
+            writer.write(html.replace("?tab=repositories",""));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return file.getName();
+    }}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            text-align: center;
+            color: #666;
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+
+.feature {
+    position: relative;
+    width: 30%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.circle {
+    position: absolute;
+    top: 20px; /* Adjust the top position */
+    right: 20px; /* Adjust the right position */
+    width: 30px;
+    height: 30px;
+    background-color: #007bff; /* Circle color */
+    border-radius: 50%; /* Make it a circle */
+    cursor: pointer;
+    z-index: 999; /* Ensure it appears above other elements */
+}
+
+/* Change circle color on hover */
+.circle:hover {
+    background-color: #0056b3;
+}
+        .feature:hover {
+            transform: translateY(-5px); /* Move the feature up slightly on hover */
+        }
+        .feature h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .feature p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<a href="/profile">
+  <div class="circle">
+  </div>
+</a>
+<div class="container">
+  <h1>Welcome to Task Management</h1>
+  <p>This project is a web application that helps teams and individuals manage tasks and projects.</p>
+  <div class="features">
+    <form id="createProjectForm" action="/api/createProject" method="post" class="feature">
+      <h2>Create Projects or Add</h2>
+      <p>Users can create/add projects to organize tasks.</p>
+      <button type="submit" style="display: none;"></button>
+      <a href="#" onclick="document.getElementById('createProjectForm').submit(); return false;">Create Project</a>
+    </form>
+    <form id="deadlinesForm" action="/api/deadlines" method="post" class="feature">
+      <h2>Set Deadlines</h2>
+      <p>Define deadlines for tasks and projects.</p>
+      <button type="submit" style="display: none;"></button>
+      <a href="#" onclick="document.getElementById('deadlinesForm').submit(); return false;">Set Deadlines</a>
+    </form>
+  </div>
+  <div class="features">
+    <a href="/api/priorities" class="feature">
+      <h2>Set Priorities</h2>
+      <p>Assign priorities to tasks for better organization.</p>
+    </a>
+    <form id="addDescriptionsForm" action="/api/descriptions" method="post" class="feature">
+      <h2>Add Descriptions</h2>
+      <p>Add descriptions to tasks for clarity.</p>
+      <button type="submit" style="display: none;"></button>
+      <a href="#" onclick="document.getElementById('addDescriptionsForm').submit(); return false;">Add Descriptions</a>
+    </form>
+  </div>
+</div>
+</body>
+</html>

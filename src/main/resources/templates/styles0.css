@@ -1,0 +1,32 @@
+body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the list */
+ul {
+    list-style: none; /* Remove bullet points */
+}
+
+/* Style the list items */
+li {
+    margin-bottom: 15px; /* Add space between list items */
+}
+
+/* Style the links */
+a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Set link color */
+    font-family: Arial, sans-serif; /* Set font family */
+    font-size: 16px; /* Set font size */
+    transition: color 0.3s; /* Add smooth color transition */
+    display: block; /* Make links block-level for padding */
+    padding: 10px; /* Add padding */
+    border-radius: 5px; /* Add border radius */
+}
+
+/* Change link color and add background on hover */
+a:hover {
+    color: #fff; /* Change text color */
+    background-color: #007bff; /* Change background color */
+}
